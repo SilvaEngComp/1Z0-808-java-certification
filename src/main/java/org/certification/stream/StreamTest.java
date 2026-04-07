@@ -26,11 +26,22 @@ public class StreamTest {
 
 //        StringBuilder word = Stream.of("add","egg","cat").collect(StringBuilder::new,StringBuilder::append,(sb1, sb2)->sb1.append(sb2));
 //        System.out.println(word);
+//
+//        TreeMap<String, Integer> map = Stream.of("cake","apple","banana","tart","cake").collect(Collectors.toMap(s->s,
+//                String::length,
+//                Integer::sum,
+//                TreeMap::new));
+//        System.out.println(map);
 
-        TreeMap<String, Integer> map = Stream.of("cake","apple","banana","tart","cake").collect(Collectors.toMap(s->s,
-                String::length,
-                Integer::sum,
-                TreeMap::new));
+        Stream<String> stream = Stream.of("Joe","Jane","John","John","John");
+            Map<Integer, Set<String>> map = stream.collect(Collectors.groupingBy(String::length,Collectors.toSet()));
+         stream = Stream.of("Joe","Jane","John","John","John");
+            TreeMap<Integer, List<String>> treeMap = stream.collect(Collectors.groupingBy(String::length,TreeMap::new,Collectors.toList()));
+
+            stream = Stream.of("Joe","Jane","John","John","John");
+            Map<Boolean, Set<String>> paticioned = stream.collect(Collectors.partitioningBy(s->s.length()>3,Collectors.toSet()));
         System.out.println(map);
-    }
+        System.out.println(treeMap);
+        System.out.println(paticioned);
+     }
 }
